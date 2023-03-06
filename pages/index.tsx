@@ -12,7 +12,7 @@ export default function Home({projects} : Props) {
   const router = useRouter();
 
   const refreshData = () => {
-    router.replace(router?.asPath);
+   router.push('/');
   }
 
   console.log({projects})

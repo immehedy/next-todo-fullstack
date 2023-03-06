@@ -10,9 +10,21 @@ interface Props {
   refreshData: any;
 }
 
+
 const HomePage = ({ projects, refreshData }: Props) => {
 const {reset} = useForm();
   const [formView, setFormView] = useState<number>();
+  const deleteItem = (projectId: any) => {
+    console.log(typeof projectId)
+        try {
+            fetch(`/api/projects/${projectId}`, {
+                method: 'DELETE'
+            })
+            refreshData();
+        } catch (error) {
+            console.log({error})
+        }
+  }
   return (
     <div>
       <InputForm refreshData={refreshData} />
@@ -28,7 +40,7 @@ const {reset} = useForm();
                   className="cursor-pointer"
                   onClick={() => {setFormView(i); reset();}}
                 />
-                <BsFillTrashFill className="cursor-pointer" />
+                <BsFillTrashFill className="cursor-pointer" onClick={() => deleteItem(project?.id)} />
               </li>
             )}
           </>

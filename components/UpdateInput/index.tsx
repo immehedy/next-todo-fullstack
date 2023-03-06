@@ -13,7 +13,6 @@ const UpdateInput = ({project, refreshData, setFormView}: Props) => {
 
     const {register, handleSubmit, reset, formState:{errors}} = useForm();
     const onSubmit = async (data: FormTypes) => {
-        console.log(typeof data)
         try {
             const body = {name: data?.projectName}
             await fetch(`api/projects/${project?.id}`, {

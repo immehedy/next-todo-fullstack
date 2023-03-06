@@ -13,4 +13,12 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
     })
     res.json(result);
   }
+
+  if(req?.method === 'DELETE'){
+    const projectId = parseInt(req.query.id as string)
+    const result = await prisma.projects.delete({
+        where: {id: projectId},
+    })
+    res.json(result)
+  }
 }
