@@ -1,33 +1,8 @@
-import React from "react";
-import { useForm } from "react-hook-form";
 import { MdOutlineAddCircle } from "react-icons/md";
+import useInputForm from "./useInputForm";
 
-interface formTypes {
-  projectName?: string;
-}
-
-const InputForm = ({ refreshData }: any) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
-  const onSubmit = async (data: formTypes) => {
-    const body = { name: data?.projectName };
-    try {
-      await fetch("/api/projects", {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      refreshData();
-      reset();
-    } catch (error) {
-      console.log({ error });
-    }
-    reset();
-  };
+const InputForm = () => {
+  const { register, handleSubmit, errors, onSubmit } = useInputForm();
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -42,7 +17,11 @@ const InputForm = ({ refreshData }: any) => {
             <p className="text-red-400">Project name is required</p>
           )}
 
-          <button type="submit" className="text-gray-200 font-semibold text-[30px] shadow-sm"><MdOutlineAddCircle/></button>
+          <button
+            type="submit"
+            className="text-gray-200 font-semibold text-[30px] shadow-sm">
+            <MdOutlineAddCircle />
+          </button>
         </div>
       </form>
     </div>

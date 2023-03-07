@@ -1,32 +1,13 @@
-import { Prisma } from "@prisma/client";
 import InputForm from "../InputForm";
 import { BsFillPencilFill, BsFillTrashFill } from "react-icons/bs";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import UpdateInput from "../UpdateInput";
 import Image from "next/image";
 import bgImg from "public/bg-todo.jpeg";
-interface Props {
-  projects: Prisma.ProjectsSelect[];
-  refreshData: any;
-}
+import { Props } from "./HomePage.type";
+import useHome from "./useHome";
 
-const HomePage = ({ projects, refreshData }: Props) => {
-  const { reset } = useForm();
-  const [formView, setFormView] = useState({
-    visible: false,
-    listValue: 0,
-  });
-  const deleteItem = (projectId: any) => {
-    try {
-      fetch(`/api/projects/${projectId}`, {
-        method: "DELETE",
-      });
-      refreshData();
-    } catch (error) {
-      console.log({ error });
-    }
-  };
+const HomePage = ({ projects }: Props) => {
+  const { reset, formView, setFormView, deleteItem } = useHome();
   return (
     <div className="relative">
       <div className="w-full h-screen object-cover relative">
@@ -36,16 +17,12 @@ const HomePage = ({ projects, refreshData }: Props) => {
         <h2 className="text-[40px] font-bold text-white mb-4 text-center">
           Todo with NEXT JS
         </h2>
-        <InputForm refreshData={refreshData} />
+        <InputForm />
         <ul className="flex flex-col gap-4 mt-4 list-disc">
           {projects?.map((project, i) => (
             <li key={i}>
               {formView?.visible && formView?.listValue === i ? (
-                <UpdateInput
-                  project={project}
-                  refreshData={refreshData}
-                  setFormView={setFormView}
-                />
+                <UpdateInput project={project} setFormView={setFormView} />
               ) : (
                 <div className="flex gap-2 items-center border-2 border-white  text-[20px]  px-2 py-1 rounded-md bg-[rgb(0,0,0,0.5)]">
                   <span className="flex-1 text-white">{project?.name}</span>

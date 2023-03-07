@@ -1,31 +1,10 @@
-import { Prisma } from "@prisma/client";
 import React from "react";
-import { useForm } from "react-hook-form";
-import {GrUpdate} from 'react-icons/gr'
-interface Props { 
-    project: any;
-    refreshData: any;
-    setFormView: any;
-  }
-interface FormTypes {
-    projectName? : string
-}
-const UpdateInput = ({project, refreshData, setFormView}: Props) => {
+import { Props } from "./UpdateInput.type";
+import useUpdateForm from "./useUpdateForm";
 
-    const {register, handleSubmit, reset, formState:{errors}} = useForm();
-    const onSubmit = async (data: FormTypes) => {
-        try {
-            const body = {name: data?.projectName}
-            await fetch(`api/projects/${project?.id}`, {
-                method: 'PUT',
-                body : JSON.stringify(body)
-            })
-            refreshData();
-            reset();
-        } catch (error) {
-            console.log({error})
-        }
-    }
+const UpdateInput = ({ project, setFormView }: Props) => {
+  const { register, handleSubmit, errors, onSubmit } = useUpdateForm(project);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex gap-2 items-center">
@@ -42,8 +21,16 @@ const UpdateInput = ({project, refreshData, setFormView}: Props) => {
           <p className="text-red-400">Project name is required</p>
         )}
 
-        <button type="submit" className="text-gray-500 bg-white rounded-md font-bold px-2 py-1">Update</button>
-        <button onClick={() => setFormView({visible: false, listValue: 0})} className="text-red-500 bg-white rounded-md font-bold px-2 py-1">Close</button>
+        <button
+          type="submit"
+          className="text-gray-500 bg-white rounded-md font-bold px-2 py-1">
+          Update
+        </button>
+        <button
+          onClick={() => setFormView({ visible: false, listValue: 0 })}
+          className="text-red-500 bg-white rounded-md font-bold px-2 py-1">
+          Close
+        </button>
       </div>
     </form>
   );
