@@ -1,7 +1,8 @@
 import { Prisma } from "@prisma/client";
 import React from "react";
 import { useForm } from "react-hook-form";
-interface Props {
+import {GrUpdate} from 'react-icons/gr'
+interface Props { 
     project: any;
     refreshData: any;
     setFormView: any;
@@ -32,7 +33,7 @@ const UpdateInput = ({project, refreshData, setFormView}: Props) => {
         <input
           type="text"
           placeholder="Project name"
-          className="outline:none border-b-2 border-gray-400 focus:outline-none"
+          className="flex-1 outline:none border-b-2 border-white focus:outline-none bg-transparent font-semibold text-[20px] text-white "
           {...register("projectName", {
             value: `${project?.name}`,
             required: true,
@@ -42,7 +43,8 @@ const UpdateInput = ({project, refreshData, setFormView}: Props) => {
           <p className="text-red-400">Project name is required</p>
         )}
 
-        <button type="submit">update</button>
+        <button type="submit" className="text-gray-500 bg-white rounded-md font-bold px-2 py-1">Update</button>
+        <button onClick={() => setFormView()} className="text-red-500 bg-white rounded-md font-bold px-2 py-1">Close</button>
       </div>
     </form>
   );
