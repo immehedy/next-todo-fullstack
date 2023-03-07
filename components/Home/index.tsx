@@ -13,7 +13,10 @@ interface Props {
 
 const HomePage = ({ projects, refreshData }: Props) => {
   const { reset } = useForm();
-  const [formView, setFormView] = useState<number>();
+  const [formView, setFormView] = useState({
+    visible: false,
+    listValue: 0,
+  });
   const deleteItem = (projectId: any) => {
     try {
       fetch(`/api/projects/${projectId}`, {
@@ -34,25 +37,22 @@ const HomePage = ({ projects, refreshData }: Props) => {
           Todo with NEXT JS
         </h2>
         <InputForm refreshData={refreshData} />
-        <div className="flex flex-col gap-4 mt-4 list-disc">
+        <ul className="flex flex-col gap-4 mt-4 list-disc">
           {projects?.map((project, i) => (
-            <>
-              {formView === i ? (
+            <li key={i}>
+              {formView?.visible && formView?.listValue === i ? (
                 <UpdateInput
-                  key={i}
                   project={project}
                   refreshData={refreshData}
                   setFormView={setFormView}
                 />
               ) : (
-                <p
-                  key={i}
-                  className="flex gap-2 items-center border-2 border-white  text-[20px]  px-2 py-1 rounded-md bg-[rgb(0,0,0,0.5)]">
+                <div className="flex gap-2 items-center border-2 border-white  text-[20px]  px-2 py-1 rounded-md bg-[rgb(0,0,0,0.5)]">
                   <span className="flex-1 text-white">{project?.name}</span>
                   <BsFillPencilFill
                     className="cursor-pointer text-gray-300 hover:text-gray-500"
                     onClick={() => {
-                      setFormView(i);
+                      setFormView({ visible: true, listValue: i });
                       reset();
                     }}
                   />
@@ -60,11 +60,11 @@ const HomePage = ({ projects, refreshData }: Props) => {
                     className="cursor-pointer text-gray-300 hover:text-gray-500"
                     onClick={() => deleteItem(project?.id)}
                   />
-                </p>
+                </div>
               )}
-            </>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   );

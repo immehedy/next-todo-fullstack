@@ -21,7 +21,6 @@ const UpdateInput = ({project, refreshData, setFormView}: Props) => {
                 body : JSON.stringify(body)
             })
             refreshData();
-            setFormView();
             reset();
         } catch (error) {
             console.log({error})
@@ -44,7 +43,7 @@ const UpdateInput = ({project, refreshData, setFormView}: Props) => {
         )}
 
         <button type="submit" className="text-gray-500 bg-white rounded-md font-bold px-2 py-1">Update</button>
-        <button onClick={() => setFormView()} className="text-red-500 bg-white rounded-md font-bold px-2 py-1">Close</button>
+        <button onClick={() => setFormView({visible: false, listValue: 0})} className="text-red-500 bg-white rounded-md font-bold px-2 py-1">Close</button>
       </div>
     </form>
   );
