@@ -10,12 +10,9 @@ interface Props {
 
 export default function Home({projects} : Props) {
   const router = useRouter();
-
   const refreshData = () => {
-   router.push('/');
+   location.reload();
   }
-
-  console.log({projects})
   return (
     <>
       <HomePage projects={projects} refreshData={refreshData}/>
