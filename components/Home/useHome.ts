@@ -7,7 +7,8 @@ const useHome = () => {
     visible: false,
     listValue: 0,
   });
-  const deleteItem = (projectId: any) => {
+  
+  const deleteItem = (projectId: number | any) => {
     try {
       fetch(`/api/projects/${projectId}`, {
         method: "DELETE",

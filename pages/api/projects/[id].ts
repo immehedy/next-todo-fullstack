@@ -19,6 +19,6 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
     const result = await prisma.projects.delete({
         where: {id: projectId},
     })
-    res.json(result)
+    res.json(result);
   }
 }
