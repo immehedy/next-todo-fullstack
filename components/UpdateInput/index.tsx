@@ -3,7 +3,7 @@ import { Props } from "./UpdateInput.type";
 import useUpdateForm from "./useUpdateForm";
 
 const UpdateInput = ({ project, setFormView }: Props) => {
-  const { register, handleSubmit, errors, onSubmit } = useUpdateForm(project);
+  const { register, handleSubmit, errors, onSubmit } = useUpdateForm();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -20,6 +20,12 @@ const UpdateInput = ({ project, setFormView }: Props) => {
         {errors.projectName && (
           <p className="text-red-400">Project name is required</p>
         )}
+        <input
+        type="hidden"
+        {...register("projectId", {
+          value: project?.id
+        })}
+        />
 
         <button
           type="submit"
